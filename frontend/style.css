@@ -1,0 +1,1313 @@
+/* 重置为白色主题 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #e4e7ec);
+    color: #333;
+    min-height: 100vh;
+}
+
+.dashboard-container {
+    padding: 20px;
+    max-width: 1920px;
+    margin: 0 auto;
+    background: white;
+}
+
+/* 顶部标题和统计 - 白色主题 */
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.dashboard-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-shadow: none;
+}
+
+/* 顶部标题和统计 - 双卡片设计 */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    padding: 25px 20px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border-left: 4px solid;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.stat-icon {
+    font-size: 2.8rem;
+    margin-right: 18px;
+    opacity: 0.9;
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 5px;
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #7f8c8d;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 为两个统计卡片设置不同的颜色主题 */
+.news-total {
+    border-left-color: #3498db;
+    background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+}
+
+.regions-covered {
+    border-left-color: #27ae60;
+    background: linear-gradient(135deg, #f8f9fa, #e8f5e8);
+}
+
+/* 新的主内容区布局 - 上下两层 */
+.dashboard-main-new {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: 85vh;
+    margin-top: 20px;
+}
+
+/* 上层：地图 - 占据60%高度 */
+.top-layer {
+    flex: 6;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    min-height: 500px;
+    margin: 0 40px;
+}
+
+.top-layer .chart-container {
+    height: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 下层：新闻列表和图表 - 整合布局 */
+.bottom-layer-integrated {
+    flex: 4;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 450px;
+}
+
+/* 分析导航栏 */
+.analysis-nav {
+    display: flex;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 0;
+}
+
+.nav-tab {
+    flex: 1;
+    padding: 15px 20px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #6c757d;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.nav-tab:hover {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.nav-tab.active {
+    color: #3498db;
+    border-bottom-color: #3498db;
+    background: white;
+}
+
+/* 分析内容区域 */
+.analysis-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+/* 左侧新闻列表 */
+.analysis-left {
+    width: 40%;
+    border-right: 1px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.news-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+}
+
+.news-panel .search-section {
+    background: white;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+/* 搜索区两行布局 */
+.news-panel .search-section .search-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+}
+
+.news-panel .search-section .search-row-main input,
+.news-panel .search-section .search-row-main select,
+.news-panel .search-section .search-row-main button {
+    flex: 1;
+    min-width: 90px;
+}
+
+/* 时间行的布局：日期占固定宽度，按钮靠右 */
+.news-panel .search-section .search-row-time {
+    align-items: center;
+}
+
+.news-panel .search-section .search-row-time .date-label {
+    font-size: 0.85rem;
+    color: #555;
+    margin-right: 4px;
+}
+
+.news-panel .search-section .search-row-time input[type="date"] {
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    font-size: 0.85rem;
+    flex: 0 0 150px;
+}
+
+.news-panel .search-section .search-row-time .date-separator {
+    margin: 0 4px;
+    color: #999;
+}
+
+.news-panel .search-section .search-row-time .update-btn {
+    margin-left: auto;
+    flex: 0 0 auto;
+}
+
+.news-panel .search-section input,
+.news-panel .search-section select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    flex: 1;
+    min-width: 80px;
+    color: #333;
+    font-size: 0.85rem;
+    max-width: calc(25% - 5px);
+}
+
+.news-panel .search-section button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+    flex: 1;
+    font-size: 0.85rem;
+    max-width: calc(20% - 5px);
+}
+
+.news-panel .search-section button:hover {
+    background: #2980b9;
+}
+
+.news-panel .news-list-section {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+}
+
+.news-panel .news-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+    min-height: 200px;
+    width: 100%;
+}
+
+/* 右侧图表区域 */
+.analysis-right {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.chart-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-panel.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.chart-panel .chart-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chart-panel h4 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+    text-align: center;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.chart-panel .chart {
+    flex: 1;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 300px;
+}
+
+/* 确保图表容器可见 */
+.chart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Leaflet 地图容器样式 */
+#leaflet-map {
+    flex: 1;
+    border-radius: 8px;
+    z-index: 1;
+    min-height: 450px;
+}
+
+/* 导航栏样式 */
+.navbar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    background: white;
+    color: #2c3e50;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+
+.nav-btn:hover {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.nav-btn.active {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+/* 分页样式 */
+.pagination-info {
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    color: #3498db;
+    text-align: center;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.page-btn {
+    padding: 5px 10px;
+    background: white;
+    color: #2c3e50;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.75rem;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 3px;
+}
+
+.page-number {
+    padding: 5px 8px;
+    background: white;
+    color: #2c3e50;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 30px;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.page-number:hover {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.page-number.active {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+#page-size {
+    padding: 5px;
+    background: white;
+    color: #2c3e50;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+/* 新闻项样式 - 文本截断优化 */
+.news-item {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.85rem;
+    width: 100%;
+    min-width: 0;
+    position: relative;
+}
+
+.news-item:hover {
+    background: #e9ecef;
+    transform: translateX(3px);
+}
+
+/* 新闻标题 - 单行截断 */
+.news-item h4 {
+    color: #2c3e50;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    min-width: 0;
+}
+
+/* 新闻元数据 - 单行截断 */
+.news-meta {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    min-width: 0;
+}
+
+/* 新闻关键词 - 多行截断（修复兼容性） */
+.news-keywords {
+    font-size: 0.75rem;
+    color: #e74c3c;
+    
+    /* 标准属性（未来兼容） */
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    
+    /* 多行截断 */
+    -webkit-line-clamp: 2;
+    -moz-line-clamp: 2;
+    line-clamp: 2;
+    
+    /* 盒子方向 */
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+    
+    /* 溢出处理 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    /* 尺寸控制 */
+    line-height: 1.2;
+    max-height: 2.4em;
+    width: 100%;
+    min-width: 0;
+}
+
+/* 自定义Tooltip样式 */
+.news-item-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: normal;
+    max-width: 300px;
+    width: max-content;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    pointer-events: none;
+    text-align: left;
+    line-height: 1.4;
+}
+
+.news-item:hover .news-item-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Tooltip 三角形箭头 */
+.news-item-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.8);
+}
+
+/* 更新图表按钮样式 */
+.update-btn {
+    background: #27ae60 !important;
+}
+
+.update-btn:hover {
+    background: #219653 !important;
+}
+
+.update-btn:disabled {
+    background: #95a5a6 !important;
+    cursor: not-allowed;
+}
+
+/* 无数据样式 */
+.no-data {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.page-ellipsis {
+    padding: 5px 3px;
+    color: #6c757d;
+    font-size: 0.75rem;
+}
+
+/* 新闻详情侧边栏样式 */
+.news-detail-sidebar {
+    position: fixed;
+    top: 0;
+    right: -600px;
+    width: 600px;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 2000;
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-detail-sidebar.active {
+    right: 0;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.news-detail-sidebar:not(.active) {
+    animation: slideOutRight 0.3s ease-out;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.news-detail-item {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.news-detail-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.news-detail-label {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.news-detail-value {
+    color: #555;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.news-detail-url {
+    color: #3498db;
+    text-decoration: none;
+    word-break: break-all;
+    display: inline-block;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s;
+}
+
+.news-detail-url:hover {
+    color: #2980b9;
+    background: #e9ecef;
+    text-decoration: underline;
+}
+
+.news-detail-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.news-detail-tag {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    border: 1px solid #bbdefb;
+}
+
+.news-detail-title {
+    font-size: 1.4rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+}
+
+/* 侧边栏遮罩层 */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1999;
+    display: none;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* 地图锚点样式 */
+.news-anchor {
+    background: transparent !important;
+    border: none !important;
+}
+
+.ocean-anchor .anchor-marker {
+    box-shadow: 0 2px 6px rgba(52, 152, 219, 0.4) !important;
+}
+
+.country-anchor .anchor-marker {
+    box-shadow: 0 2px 6px rgba(39, 174, 96, 0.4) !important;
+}
+
+.anchor-marker {
+    transition: all 0.3s ease !important;
+}
+
+.anchor-marker:hover {
+    transform: scale(1.3) !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4) !important;
+    z-index: 1000 !important;
+}
+
+/* 主动高亮地图锚点（配合列表 hover 使用） */
+.anchor-marker.active-marker {
+    transform: scale(1.3) !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4) !important;
+    z-index: 1000 !important;
+}
+
+/* 地图图例样式 */
+.map-legend {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+}
+
+.leaflet-control .map-legend {
+    background: white;
+    padding: 10px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    font-size: 11px;
+    min-width: 150px;
+    max-width: 170px;
+}
+
+.leaflet-control .map-legend h4 {
+    margin: 0 0 8px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #2c3e50;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 6px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+    line-height: 1.2;
+}
+
+.legend-color {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-right: 8px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.legend-color.square {
+    border-radius: 2px;
+}
+
+.legend-text {
+    flex: 1;
+    font-size: 10px;
+    color: #555;
+}
+
+.legend-divider {
+    margin: 8px 0;
+    border: none;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* 地图头部样式 */
+.map-section .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.map-section .chart-header h4 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+}
+
+/* 修复地图弹出框样式 - 解决灰色框问题 */
+.custom-popup-right {
+    position: absolute;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    z-index: 1000;
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    animation: popupFadeIn 0.2s ease-out;
+    min-width: 280px;
+    max-width: 350px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.custom-popup-right h4 {
+    margin: 0 0 12px 0;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    word-wrap: break-word;
+}
+
+/* 确保区域名称完整显示 */
+.region-name-header {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #3498db;
+    line-height: 1.3;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 防止文本截断 */
+.custom-popup-right * {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    line-height: 1.3 !important;
+    max-width: 100% !important;
+}
+
+/* 区域新闻项样式 */
+.region-news-item {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s;
+    word-break: break-word;
+}
+
+.region-news-item:hover {
+    background: #e9ecef;
+    transform: translateX(3px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-10px); }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* 按钮样式优化 */
+.custom-popup-right button {
+    background: #3498db !important;
+    color: white !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 0.85rem !important;
+    transition: background 0.3s !important;
+    font-family: inherit !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+.custom-popup-right button:hover {
+    background: #2980b9 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+}
+
+/* 滚动条样式优化 */
+.custom-popup-right::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-popup-right::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.custom-popup-right::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.custom-popup-right::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.news-detail-back-btn {
+    margin-bottom: 8px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    border: 1px solid #d0d0e0;
+    background: #f5f5fa;
+    color: #333;
+    cursor: pointer;
+}
+
+.news-detail-back-btn:hover {
+    background: #e6e6f5;
+}
+
+.sidebar-header-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.back-btn {
+    display: none;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+.back-btn:active {
+    transform: translateY(0);
+}
+
+.kg-status-indicator {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+    background: #95a5a6;
+}
+
+.kg-status-indicator .status-text {
+    color: #ecf0f1;
+}
+
+/* 新增分类标签样式 */
+.news-detail-tag.theme-category {
+    background: #e8f5e8 !important;
+    color: #2e7d32 !important;
+    border: 1px solid #a5d6a7 !important;
+}
+
+.news-detail-tag.location-category {
+    background: #e3f2fd !important;
+    color: #1565c0 !important;
+    border: 1px solid #90caf9 !important;
+}
+
+.news-detail-tag.pollution-category {
+    background: #ffebee !important;
+    color: #c62828 !important;
+    border: 1px solid #ef9a9a !important;
+}
+
+.news-detail-tag.time-category {
+    background: #fff3e0 !important;
+    color: #ef6c00 !important;
+    border: 1px solid #ffcc80 !important;
+}
+
+/* 分类统计样式 */
+.category-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.category-stat-item {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.category-stat-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.category-stat-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* 搜索建议框样式 */
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestion-item:hover {
+    background: #f5f5f5;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+/* 搜索统计样式 */
+.search-stats {
+    margin: 10px 0;
+}
+
+/* 时间筛选清除按钮 */
+.clear-time-filter-btn {
+    margin-left: 12px;
+    padding: 2px 10px;
+    font-size: 12px;
+    border-radius: 999px;
+    border: 1px solid #1976d2;
+    background-color: #ffffff;
+    color: #1976d2;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.clear-time-filter-btn:hover {
+    background-color: #1976d2;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.clear-time-filter-btn:active {
+    transform: translateY(0);
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+    .dashboard-main-new {
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .analysis-content {
+        flex-direction: column;
+    }
+    
+    .analysis-left {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e9ecef;
+        height: 50%;
+    }
+    
+    .analysis-right {
+        width: 100%;
+        height: 50%;
+    }
+    
+    .top-layer {
+        margin: 0 20px;
+    }
+    
+    .news-panel .search-section input,
+    .news-panel .search-section select,
+    .news-panel .search-section button {
+        max-width: calc(33.333% - 5px);
+        flex: none;
+    }
+    
+    .custom-popup-right {
+        min-width: 250px;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .analysis-nav {
+        flex-direction: column;
+    }
+    
+    .nav-tab {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .chart-panel .chart-container {
+        padding: 15px;
+    }
+    
+    .news-panel .search-section input,
+    .news-panel .search-section select,
+    .news-panel .search-section button {
+        max-width: calc(50% - 5px);
+        flex: none;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .dashboard-header h1 {
+        font-size: 2rem;
+    }
+    
+    .news-detail-sidebar {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .top-layer {
+        margin: 0 10px;
+    }
+    
+    .news-item-tooltip {
+        max-width: 250px;
+        font-size: 0.75rem;
+    }
+    
+    .custom-popup-right {
+        min-width: 220px;
+        max-width: 280px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .news-panel .search-section input,
+    .news-panel .search-section select,
+    .news-panel .search-section button {
+        max-width: 100%;
+        flex: none;
+    }
+    
+    .news-item-tooltip {
+        max-width: 200px;
+        left: 10px;
+        transform: none;
+    }
+    
+    .news-item-tooltip::after {
+        left: 20px;
+    }
+    
+    .custom-popup-right {
+        min-width: 200px;
+        max-width: 250px;
+        padding: 10px;
+    }
+}

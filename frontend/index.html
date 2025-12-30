@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海洋新闻态势感知大屏</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+    <!-- 添加词云扩展 -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.0.0/dist/echarts-wordcloud.min.js"></script>
+    
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <div class="navbar">
+            <button id="btn-dashboard" class="nav-btn active">态势感知大屏</button>
+            <button id="btn-knowledge-graph" class="nav-btn">知识图谱</button>
+            <!-- 添加知识图谱状态指示器 -->
+            <div id="kg-status" class="kg-status-indicator" style="margin-left: auto; display: flex; align-items: center;">
+                <span class="status-dot"></span>
+                <span class="status-text">知识图谱状态: 检查中...</span>
+            </div>
+        </div>
+        
+        <!-- 顶部标题和统计 -->
+        <header class="dashboard-header">
+            <h1>🌊 海洋新闻态势感知系统</h1>
+            <div class="stats-container">
+                <div class="stat-card news-total">
+                    <div class="stat-icon">📰</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="total-news">0</div>
+                        <div class="stat-label">新闻总量</div>
+                    </div>
+                </div>
+                <div class="stat-card regions-covered">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="total-regions">0</div>
+                        <div class="stat-label">涉及区域</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要内容区 - 新布局：上下两层 -->
+        <main class="dashboard-main-new">
+            <!-- 上层：地图 -->
+            <div class="top-layer">
+                <div class="map-section">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4>🌍 全球新闻分布</h4>
+                            <div class="map-controls">
+                                <button id="map-zoom-in" class="map-btn">+</button>
+                                <button id="map-zoom-out" class="map-btn">-</button>
+                                <button id="map-reset" class="map-btn">重置</button>
+                            </div>
+                        </div>
+                        <div id="leaflet-map" class="chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 下层：整合的分析面板 -->
+            <div class="bottom-layer-integrated">
+                <!-- 导航栏 -->
+                <div class="analysis-nav">
+                    <button class="nav-tab active" data-tab="news-list">📰 新闻列表</button>
+                    <button class="nav-tab" data-tab="time-chart">📈 时间趋势</button>
+                    <button class="nav-tab" data-tab="wordcloud-chart">☁️ 热点词云</button>
+                </div>
+
+                <!-- 内容区域 -->
+                <div class="analysis-content">
+                    <!-- 左侧：新闻列表（固定显示） -->
+                    <div class="analysis-left">
+                        <div class="news-panel">
+                            <div class="search-section">
+                                <!-- 第一行：关键词 + 区域 + 主题 + 搜索 / 清空 -->
+                                <div class="search-row search-row-main">
+                                    <input type="text" id="keyword-search" placeholder="搜索关键词...">
+                                    <select id="region-filter">
+                                        <option value="">所有区域</option>
+                                    </select>
+                                    <select id="topic-filter">
+                                        <option value="">所有主题</option>
+                                    </select>
+                                    <button onclick="searchNews()">搜索</button>
+                                    <button onclick="clearFilters()">清空</button>
+                                </div>
+
+                                <!-- 第二行：时间范围 + 更新图表 -->
+                                <div class="search-row search-row-time">
+                                    <label class="date-label">时间范围：</label>
+                                    <input type="date" id="start-date">
+                                    <span class="date-separator">—</span>
+                                    <input type="date" id="end-date">
+                                    <button onclick="updateCharts()" id="update-charts-btn" class="update-btn">更新图表</button>
+                                </div>
+                            </div>
+
+                            
+                            <div class="news-list-section">
+                                <!-- 分页信息 -->
+                                <div class="pagination-info">
+                                    显示 <span id="start-index">1</span>-<span id="end-index">10</span> 条，共 <span id="total-count">0</span> 条
+                                </div>
+                                
+                                <!-- 新闻列表容器 -->
+                                <div class="news-list" id="news-list">
+                                    <!-- 新闻列表动态填充 -->
+                                </div>
+                                
+                                <!-- 分页控件 -->
+                                <div class="pagination-controls">
+                                    <button id="prev-page" class="page-btn" disabled>上一页</button>
+                                    <div class="page-numbers" id="page-numbers">
+                                        <!-- 页码动态生成 -->
+                                    </div>
+                                    <button id="next-page" class="page-btn">下一页</button>
+                                    <select id="page-size">
+                                        <option value="5">5条/页</option>
+                                        <option value="10" selected>10条/页</option>
+                                        <option value="20">20条/页</option>
+                                        <option value="50">50条/页</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右侧：图表区域（可切换） -->
+                    <div class="analysis-right">
+                        <!-- 时间趋势图 -->
+                        <div class="chart-panel active" id="time-chart-panel">
+                            <div class="chart-container">
+                                <h4>📈 时间趋势分析</h4>
+                                <div id="time-chart" class="chart"></div>
+                            </div>
+                        </div>
+
+                        <!-- 词云图 -->
+                        <div class="chart-panel" id="wordcloud-chart-panel">
+                            <div class="chart-container">
+                                <h4>☁️ 热点词云</h4>
+                                <div id="wordcloud-chart" class="chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 新闻详情侧边栏 -->
+    <div id="news-detail-sidebar" class="news-detail-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-header-main">
+                <h3>新闻详情</h3>
+                <button id="back-to-assistant" class="back-btn">← 返回助手</button>
+            </div>
+            <button id="close-sidebar" class="close-btn">&times;</button>
+        </div>
+        <div class="sidebar-content">
+            <div id="news-detail-content">
+                <!-- 动态填充新闻详情 -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 鲸鱼助手 -->
+    <div id="whale-assistant" class="whale-assistant">
+        <div class="whale-icon">🐋</div>
+        <div class="whale-tooltip">点击问我问题</div>
+    </div>
+
+    <!-- 问答窗口 -->
+    <div id="qa-modal" class="qa-modal">
+        <div class="qa-modal-content">
+            <div class="qa-modal-header">
+                <h3>🐋 海洋新闻助手</h3>
+                <button class="qa-close-btn">&times;</button>
+            </div>
+            <div class="qa-modal-body">
+                <!-- 热门问题推荐 -->
+                <div class="popular-questions">
+                    <h4>💡 热门问题</h4>
+                    <div class="question-chips">
+                        <div class="question-chip" data-question="最近有哪些海洋污染事件？">最近有哪些海洋污染事件？</div>
+                        <div class="question-chip" data-question="LNG动力船舶的发展现状如何？">LNG动力船舶的发展现状如何？</div>
+                        <div class="question-chip" data-question="国际航运减排政策有哪些？">国际航运减排政策有哪些？</div>
+                        <div class="question-chip" data-question="海洋生态保护的最新措施？">海洋生态保护的最新措施？</div>
+                    </div>
+                </div>
+            
+                <!-- 问答界面 -->
+                <div class="qa-interface">
+                    <div class="qa-chat-container">
+                        <div class="qa-messages" id="qa-messages">
+                            <div class="message bot-message">
+                                <div class="message-avatar">🐋</div>
+                                <div class="message-content">
+                                    您好！我是海洋新闻助手，可以问我任何关于海洋环保、航运、污染治理等方面的问题。
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="qa-input-container">
+                            <div class="qa-input-wrapper">
+                                <input type="text" id="qa-question-input" placeholder="输入您的问题..." class="qa-input">
+                                <button id="qa-send-btn" class="qa-send-btn">
+                                    <span>发送</span>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- 搜索结果 -->
+                    <div class="qa-results" id="qa-results">
+                        <div class="results-header">
+                            <h4>📰 相关新闻</h4>
+                            <span class="results-count">找到 <span id="results-count">0</span> 条相关新闻</span>
+                        </div>
+                        <div class="results-list" id="results-list">
+                        <!-- 动态填充搜索结果 -->
+                        </div>
+                        <button class="view-all-kg-btn" id="view-all-kg-btn" style="display: none;" onclick="qaAssistant.viewAllResultsInKnowledgeGraph()">
+                            🔗 查看全部知识图谱关联
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 在现有的脚本引入之后添加 -->
+    <link rel="stylesheet" href="qa-assistant.css">
+    <script src="qa-assistant.js"></script>
+    <!-- 在知识图谱页面或主页面中 -->
+    <script src="/js/kg-bridge.js"></script>
+    <link rel="stylesheet" href="/css/kg-bridge.css">
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- 在现有的脚本引入之后添加 -->
+    <script src="balanced_regions.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

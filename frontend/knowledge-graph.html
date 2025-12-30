@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海洋知识图谱可视化系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="knowledge-graph.css">
+</head>
+<body>
+    <div class="kg-container">
+        <button class="back-button" onclick="handleBackToDashboard()">← 返回大屏幕</button>
+
+        <div class="kg-header">
+            <h1>🌊 海洋知识图谱可视化系统</h1>
+            <p>探索项目、区域、组织间的复杂关系网络</p>
+        </div>
+
+        <!-- <div class="floating-controls" id="floating-controls">
+            <div class="status-ball" id="status-ball">
+                <div class="status-icon">🔍</div>
+                <div class="drag-tooltip">拖动我</div>
+            </div> -->
+
+            <!-- <div class="control-panel" id="control-panel">
+                <h3>🔍 图谱探索</h3>
+                <div class="control-group">
+                    <label class="control-label" for="entity-type">实体类型</label>
+                    <select class="control-select" id="entity-type">
+                        <option value="">所有类型</option>
+                        <option value="Project">项目</option>
+                        <option value="Region">区域</option>
+                        <option value="Organization">组织</option>
+                        <option value="PollutionSource">污染源</option>
+                        <option value="Measure">治理措施</option>
+                        <option value="Effect">效果数据</option>
+                        <option value="Time">时间</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="search-keyword">关键词搜索</label>
+                    <input type="text" class="control-input" id="search-keyword" placeholder="输入关键词...">
+                </div>
+
+                <div class="multi-condition-search" id="multi-condition-search">
+                    <button class="collapse-toggle" onclick="toggleConditionSearch()">
+                        <span>🔍 多条件搜索</span>
+                        <span id="collapse-icon">▼</span>
+                    </button>
+
+                    <div class="condition-content">
+                        <div class="condition-group">
+                            <label>时间</label>
+                            <input type="text" id="search-time" placeholder="如: 2024年">
+                        </div>
+
+                        <div class="condition-group">
+                            <label>污染来源</label>
+                            <input type="text" id="search-pollution" placeholder="如: 船舶排放">
+                        </div>
+
+                        <div class="condition-group">
+                            <label>区域</label>
+                            <input type="text" id="search-region" placeholder="如: 渤海">
+                        </div>
+
+                        <div class="condition-group">
+                            <label>治理措施</label>
+                            <input type="text" id="search-measure" placeholder="如: 生态修复">
+                        </div>
+
+                        <div class="condition-group">
+                            <label>实施主体</label>
+                            <input type="text" id="search-organization" placeholder="如: 环保局">
+                        </div>
+
+                        <div class="search-options">
+                            <label>
+                                <input type="checkbox" id="fuzzy-match" checked> 模糊匹配
+                            </label>
+                            <label>
+                                <input type="checkbox" id="match-all"> 必须同时满足
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-buttons">
+                    <button class="control-btn search-btn" onclick="searchGraph()">搜索图谱</button>
+                    <button class="control-btn reset-btn" onclick="resetGraph()">重置视图</button>
+                    <button class="control-btn export-btn" onclick="exportGraph()">导出图谱</button>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stats-item">
+                        <span>节点数量:</span>
+                        <span class="stats-value" id="node-count">0</span>
+                    </div>
+                    <div class="stats-item">
+                        <span>关系数量:</span>
+                        <span class="stats-value" id="relationship-count">0</span>
+                    </div>
+                    <div class="stats-divider"></div>
+                    <div class="stats-item">
+                        <span>最后更新:</span>
+                        <span class="stats-value" id="last-update">-</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div id="knowledge-graph"></div>
+        <div class="legend" id="legend"></div>
+        
+
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">加载知识图谱数据...</div>
+        </div>
+    </div>
+
+    <script src="knowledge-graph.js"></script>
+</body>
+</html>
